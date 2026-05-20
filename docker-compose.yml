@@ -1,0 +1,11 @@
+services:
+  solver:
+    build:
+      context: .
+      dockerfile: python/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./python/static:/app/static:ro
+      - ./python/solver.py:/app/solver.py:ro
+    restart: unless-stopped
