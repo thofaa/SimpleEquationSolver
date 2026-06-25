@@ -2,10 +2,10 @@ services:
   solver:
     build:
       context: .
-      dockerfile: python/Dockerfile
+      dockerfile: src/Dockerfile
     ports:
       - "5000:5000"
     volumes:
-      - ./python/static:/app/static:ro
-      - ./python/solver.py:/app/solver.py:ro
+      - ./src/static:/app/static:ro
+      - ./src/solver.py:/app/solver.py:ro
     restart: unless-stopped

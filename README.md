@@ -12,5 +12,4 @@ and then launch the app (default in `http://localhost:5000/`)
 
 ## Files
 
-- `src/pyo3temp.rs` contains the Rust bridge.
-- `python/solver.py` contains the SymPy solver.
+- `src/solver.py` contains the SymPy solver.

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Equation Solver</title>
+    <style>
+      :root {
+        --bg: #011627;
+        --bg-alt: #0B253A;
+        --fg: #D6DEEB;
+        --blue: #82AAFF;
+        --cyan: #7FDBCA;
+        --green: #ADDB67;
+        --yellow: #FFCB8B;
+        --orange: #F78C6C;
+        --purple: #C792EA;
+        --red: #EF5350;
+        --comment: #637777;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 24px;
+        background: var(--bg);
+        color: var(--fg);
+        font-size: 18px;
+        line-height: 1.6;
+      }
+      h1 { color: var(--blue); font-size: 28px; }
+      h2 { color: var(--cyan); font-size: 22px; }
+      label {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--yellow);
+        font-weight: 500;
+      }
+      input, button {
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      input {
+        background: var(--bg-alt);
+        border: 2px solid var(--comment);
+        color: var(--fg);
+        font-size: 20px;
+        padding: 12px 16px;
+        border-radius: 8px;
+        transition: border-color 0.2s;
+      }
+      input:focus {
+        outline: none;
+        border-color: var(--blue);
+      }
+      button {
+        background: var(--blue);
+        color: var(--bg);
+        font-size: 20px;
+        font-weight: 600;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      button:hover { opacity: 0.9; }
+      pre {
+        background: var(--bg-alt);
+        border: 2px solid var(--comment);
+        color: var(--green);
+        padding: 16px;
+        border-radius: 8px;
+        font-size: 18px;
+        overflow-x: auto;
+        min-height: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Equation Solver</h1>
+    <label>Equation (use =):
+      <input id="equation" value="2*x + 3 = 7" />
+    </label>
+    <label>Variable name:
+      <input id="variable" value="x" />
+    </label>
+    <button id="solve">Solve</button>
+
+    <h2>Result</h2>
+    <pre id="result">(no result yet)</pre>
+
+    <script>
+      document.getElementById('solve').addEventListener('click', async () => {
+        const equation = document.getElementById('equation').value;
+        const variable = document.getElementById('variable').value || 'x';
+
+        const res = await fetch('/solve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ equation, variable })
+        });
+
+        const data = await res.json();
+        document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+      });
+    </script>
+  </body>
+</html>
